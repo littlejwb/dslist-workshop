@@ -17,14 +17,22 @@ import java.util.List;
 public class GameListController {
 
     private GameListService serviceList;
+    private GameService gameService;
 
-    public GameListController(GameListService serviceList) {
+    public GameListController(GameListService serviceList, GameService gameService) {
         this.serviceList = serviceList;
+        this.gameService = gameService;
     }
 
     @GetMapping
     public List<GameListDTO> findAll() {
         List<GameListDTO> result = serviceList.findAll();
+        return result;
+    }
+
+    @GetMapping(value = "/{listId}/games")
+    public List<GameMinDTO> findByList(@PathVariable Long listId) {
+        List<GameMinDTO> result = gameService.findByList(listId);
         return result;
     }
 }
